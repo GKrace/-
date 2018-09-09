@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        div {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 100px;
+            height: 100px;
+            background: orange;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1"></div>
+    <script>
+        var $Div = document.getElementById('div1');
+        var timer = null;
+        $Div.onclick = function () {
+            startMove();
+        }
+        function startMove() {
+            clearInterval(timer);
+            var iSpeedX = 16;
+            var iSpeedY = 8; 
+            var g = 3;          
+            timer = setInterval(function () {
+                iSpeedY += g;
+                var l = $Div.offsetLeft + iSpeedX;
+                var t = $Div.offsetTop + iSpeedY;
+                if (t > document.documentElement.clientHeight - $Div.offsetHeight) {
+                    iSpeedY *= -1;
+                    iSpeedY *= 0.8;
+                    iSpeedX *= 0.8;
+                    t = document.documentElement.clientHeight - $Div.offsetHeight
+                } else if (t <= 0){
+                    iSpeedY *= -1;
+                    iSpeedX *= 0.8;
+                    t = 0;
+                }
+                if (l > document.documentElement.clientWidth - $Div.offsetWidth) {
+                    iSpeedX *= -1;
+                    iSpeedX *= 0.8;
+                    l = document.documentElement.clientWidth - $Div.offsetWidth;
+                }else if (l <= 0 ) {
+                    iSpeedX *= -1;
+                    iSpeedX *= 0.8;
+                    l = 0;
+                }               
+                $Div.style.left = l + 'px';
+                $Div.style.top = t + 'px';                                
+            },30);
+        }
+    </script>
+</body>
+</html>

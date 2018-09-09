@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style type="text/css">
+	#move{
+		width: 100px;
+		height: 100px;
+		background-color: #c5f;
+		border-radius: 50%;
+		position: absolute;
+		left:50px;
+		top: 50px;
+	}
+
+
+</style>
+<body>
+<!-- <div class="move"></div> -->
+<div id="move"></div>
+<script>
+	function getStyle(obj, prop, fake) {
+			var fake = fake || null;
+			if(obj.currentStyle) {
+				return obj.currentStyle[prop];
+			}else {
+				return window.getComputedStyle(obj, fake)[prop];
+			}
+		}	
+
+	var div = document.getElementById('move');
+	// console.log(div);
+	var disX,
+		disY;
+	div.addEventListener('mousedown', function (e){
+			// console.log(this);
+				disX = e.clientX - parseInt(getStyle(this, 'left')),
+				disY = e.clientY - parseInt(getStyle(this, 'top'));
+			document.addEventListener('mousemove', mouseMove, false);
+			div.addEventListener('mouseup', function (e) {
+				document.removeEventListener('mousemove', mouseMove, false);
+				}, false);
+			}, false);
+ 
+		function mouseMove(e) {
+		    div.style.left = e.clientX - disX + 'px';
+		    div.style.top = e.clientY - disY + 'px';
+		}
+
+	var div = document.getElementsByTagName('div')[0]
+	function drag(elem) {
+		var disX,
+    		dixY;
+		addEvent(elem, 'mousedown', function (e) {
+			var event = e || window.event;
+			disX = event.clientX - parseInt(getStyle(elem, 'left'));
+			disY = event.clientY - parseInt(getStyle(elem, 'top'));
+ 
+			addEvent(document, 'mouseup', mouseUp);
+			stopBubble(e);
+			cancelHandler(e);
+		});
+		// addEvent(document, 'mousemove', mouseMove);
+ 
+	function mouseMove(e) {
+		var event = e || window.event;
+		elem.style.left = event.clientX - disX + 'px';
+		elem.style.top = event.clientY - disY + 'px';
+	}
+	function mouseUp (e) {
+		removeEvent(document, 'mousemove', mouseMove);
+		removeEvent(document, 'mouseup', arguments.callee);
+	}
+}
+drag(div);
+
+		// function getStyle(obj, prop, fake) {
+		// 	var fake = fake || null;
+		// 	if(obj.currentStyle) {
+		// 		return obj.currentStyle[prop];
+		// 	}else {
+		// 		return window.getComputedStyle(obj, fake)[prop];
+		// 	}
+		// }	
+
+
+
+	// //封装一个兼容性的事件绑定函数
+	function addEvent(ele, type, handle) {
+			if (ele.addEventListener) {
+				ele.addEventListener(type, handle, null);
+			}else if (ele.attachEvent) {
+				ele['temp' + type + handle] = handle;
+				ele[type + handle] = function () {
+				ele['temp' + type + handle].call(ele);
+				};
+				ele.attachEvent('on' + type, ele[type + handle]);
+			}else{
+				ele['on' + type] = handle;
+			}
+		}
+		
+	
+	// // 封装兼容性的解除绑定函数：
+
+ 
+	function removeEvent(ele, type, handle) {
+	        if(ele.removeEventListener) {
+	            ele.removeEventListener(type, handle, false);
+	        }else if (ele.detachEvent) {
+	            ele.detachEvent('on' + type, handle);
+	        }else {
+	            ele['on' + type] = null;
+	        }
+		}
+
+	// // 封装一个兼容性的取消事件冒泡的方法：
+	function stopBubble(event) {
+		if(event.stopPropagation) {
+			event.stopPropagation();
+		}else {
+			event.cancelBubble = true;
+		}
+	}
+
+	// // 封装一个兼容性的阻止默认事件的方法了：
+	function cancelHandler(event) {
+		if(event.preventDefault) {
+			event.preventDefault();
+		}else{
+			event.returnValue = false;
+		}
+	}
+ 
+ //   // 利用事件源对象和事件冒泡来处理的方式就叫做事件委托。
+ //   // 我们现在有一个ul，下面有十万个li，当我们给父级的ul添加第一个点击
+ //   // 事件之后，由于事件冒泡的存在，不论我们点击哪一个li都会调用父级的
+ //   // 点击事件处理函数，这个时候触发父级ul的点击函数的那个li就被称之为
+ //   // 事件源对象。
+
+ 
+	// oUl.addEventListener('click', function (e) {
+	// 	var event = e || window.event;
+	// 	var tar = event.target || event.srcElement;
+	// 	console.log(tar.innerHTML);
+	// 	}, false);
+
+	// // 	事件委托的优点：
+
+	// // 1.性能 不需要循环所有的子元素一个个绑定事件
+
+	// // 2.灵活 当有新的子元素被加入的时候不需要重新绑定事件
+
+
+	// // scroll事件
+	// // 这个方法是监听滚轮滚动的事件，我们可以用这个事件来写一个兼容版的fix定位。
+	// function beFixed(ele){
+	// 	var initPosX = ele.getPosition().w,
+	// 		initPosY = ele.getPosition().h;
+	// 	addEvent(window, 'scroll', function(e){
+	// 		ele.style.top =  initPosY + getScrollOffset().h + 'px';
+	// 		ele.style.left =  initPosX + getScrollOffset().w + 'px';
+	// 	})
+	// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+	
+</body>
+</html>

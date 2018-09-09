@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        div {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 100px;
+            height: 100px;
+            background: yellow;
+        } 
+        span {
+            position: absolute;
+            left: 300px;
+            top: 0px;
+            width: 1px;
+            height: 100px;
+            background: black;
+        }
+    </style>
+</head>
+<body>    
+    <div id="div1"></div>
+    <span></span>
+    <script>
+        var $Div = document.getElementById('div1');
+        var timer = null;
+        $Div.onclick = function () {
+            startMove();
+        }
+        function startMove() {
+            clearInterval(timer);
+            var iSpeed = 0;
+            var a = 1;
+            var u = 0.8;
+            timer = setInterval(function () {
+                a = (300 - $Div.offsetLeft) / 5;                
+                iSpeed += a;
+                iSpeed *= u;                
+                $Div.style.left = $Div.offsetLeft + iSpeed + 'px';
+            },30);
+        }
+    </script>
+</body>
+</html>
