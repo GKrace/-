@@ -1,5 +1,5 @@
 # Animation
-基于原生js实现的一些动画效果
+基于原生js实现的一些动画效果。
 
 ### [导航栏效果](https://gracekang.site/Animation/nav-bar.html)
 ### [广告悬浮效果](https://gracekang.site/Animation/ad.html)
